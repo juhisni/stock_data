@@ -17,7 +17,6 @@ app.get("/", function(req, res){
 });
 
 app.post("/", function(req, res){
-  console.log(apikey);
   var baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=AAPL&api_token=" + apikey;
 
   var options = {
