@@ -7,10 +7,10 @@ const fs = require("fs");
 
 const app = express();
 
+app.use(bodyParser.urlencoded({extended: true}));
+
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
 var apikey = fs.readFileSync("token.txt", "utf8");
-
-app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(req, res){
   res.sendFile(__dirname + "/index.html");
@@ -25,7 +25,14 @@ app.post("/", function(req, res){
   };
 
   request(options, function(error, response, body){
-    res.write("<p>ALL DATA: " + body + "</p>");
+
+    var stock_data = JSON.parse(body);
+
+    var stock_object = stock_data.data;
+
+    var stock_price = stock_object[0].price;
+
+    res.write("The current price of Apple stock is: " + stock_price + " USD.");
     res.send();
   });
 });
