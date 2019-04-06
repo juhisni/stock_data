@@ -32,7 +32,9 @@ app.post("/", function(req, res){
 
     var stock_price = stock_object[0].price;
 
-    res.write("The current price of Apple stock is: " + stock_price + " USD.");
+    var stock_currency = stock_object[0].currency;
+
+    res.write("The current price of Apple stock is: " + stock_price + " " + stock_currency + ".");
     res.send();
   });
 });
