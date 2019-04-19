@@ -2,18 +2,22 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const ejs = require("ejs");
 const request = require("request");
 const fs = require("fs");
 
 const app = express();
 
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
 
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
 var apikey = fs.readFileSync("token.txt", "utf8");
 
 app.get("/", function(req, res){
-  res.sendFile(__dirname + "/index.html");
+  res.render("home");
 });
 
 app.post("/", function(req, res){
