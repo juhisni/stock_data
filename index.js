@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const request = require("request");
 const fs = require("fs");
+const _ = require("lodash");
 
 const app = express();
 
@@ -18,6 +19,7 @@ let stocks = [];
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
 var apikey = fs.readFileSync("token.txt", "utf8");
 
+//Homepage and a example GET request for Apple stock with rendered data price data.
 app.get("/", function(req, res){
   var baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=AAPL&api_token=" + apikey;
 
@@ -55,11 +57,11 @@ app.post("/add", function(req, res){
 
 //Navigating and rendering a certain stock's information to an individual page
 app.get("/stocks/:stockName", function(req, res){
-  let requestedStockName = req.params.stockName;
+  let requestedStockName = _.lowerCase(req.params.stockName);
 
   //Checks if the stock is included in the stocks array and renders page if so
   stocks.forEach(function(stock){
-    let userStock = stock.symbol;
+    let userStock = _.lowerCase(stock.symbol);
     if (userStock === requestedStockName){
       res.render("stock", {
         stockPageTitle: stock.symbol
