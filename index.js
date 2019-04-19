@@ -44,12 +44,28 @@ app.get("/", function(req, res){
   });
 });
 
+//Adding new stocks to follow
 app.post("/add", function(req, res){
   const stock = {
     symbol: req.body.tickerSymbol
   };
   stocks.push(stock);
   res.redirect("/");
+});
+
+//Navigating and rendering a certain stock's information to an individual page
+app.get("/stocks/:stockName", function(req, res){
+  let requestedStockName = req.params.stockName;
+
+  //Checks if the stock is included in the stocks array and renders page if so
+  stocks.forEach(function(stock){
+    let userStock = stock.symbol;
+    if (userStock === requestedStockName){
+      res.render("stock", {
+        stockPageTitle: stock.symbol
+      });
+    }
+  });
 });
 
 app.listen(3000, function(){
