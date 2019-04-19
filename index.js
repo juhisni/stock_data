@@ -17,10 +17,6 @@ app.use(express.static("public"));
 var apikey = fs.readFileSync("token.txt", "utf8");
 
 app.get("/", function(req, res){
-  res.render("home");
-});
-
-app.post("/", function(req, res){
   var baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=AAPL&api_token=" + apikey;
 
   var options = {
@@ -38,8 +34,10 @@ app.post("/", function(req, res){
 
     var stock_currency = stock_object[0].currency;
 
-    res.write("The current price of Apple stock is: " + stock_price + " " + stock_currency + ".");
-    res.send();
+    res.render("home", {
+      exampleStockPrice: stock_price,
+      exampleStockCurrency: stock_currency
+    });
   });
 });
 
