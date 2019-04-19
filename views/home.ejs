@@ -1,4 +1,15 @@
 <%- include("partials/header") %>
 <h1>Stock Data</h1>
 <p><%= exampleStockPrice + " " + exampleStockCurrency%></p>
+<h1>Add a new stock</h1>
+<form action="/add" method="post">
+  <div class="form-group">
+    <label>Ticker symbol for stock</label>
+    <input class="form-control" type="text" name="tickerSymbol">
+  </div>
+  <button class="btn btn-primary" type="submit">Add</button>
+</form>
+<% stocks.forEach(function(stock){ %>
+  <h1><%= stock.symbol %></h1>
+<% }) %>
 <%- include("partials/footer") %>

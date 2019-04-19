@@ -13,6 +13,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+let stocks = [];
+
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
 var apikey = fs.readFileSync("token.txt", "utf8");
 
@@ -36,9 +38,18 @@ app.get("/", function(req, res){
 
     res.render("home", {
       exampleStockPrice: stock_price,
-      exampleStockCurrency: stock_currency
+      exampleStockCurrency: stock_currency,
+      stocks: stocks
     });
   });
+});
+
+app.post("/add", function(req, res){
+  const stock = {
+    symbol: req.body.tickerSymbol
+  };
+  stocks.push(stock);
+  res.redirect("/");
 });
 
 app.listen(3000, function(){
