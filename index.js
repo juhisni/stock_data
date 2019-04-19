@@ -40,7 +40,7 @@ app.post("/add", function(req, res){
 app.get("/stocks/:stockName", function(req, res){
   let requestedStockName = _.lowerCase(req.params.stockName);
 
-  //Checks if the stock is included in the stocks array and renders page if so
+  //Checks if the stock is included in the stocks array and requests stock data if so
   stocks.forEach(function(stock){
     let userStock = _.lowerCase(stock.symbol);
     if (userStock === requestedStockName){
@@ -61,6 +61,7 @@ app.get("/stocks/:stockName", function(req, res){
 
         var stock_currency = stock_object[0].currency;
 
+        //Render stock data on the page
         res.render("stock", {
           stockPageTitle: stock.symbol,
           stockPagePrice: stock_price,
