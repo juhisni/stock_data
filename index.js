@@ -54,19 +54,30 @@ app.get("/stocks/:stockName", function(req, res){
 
       request(options, function(error, response, body){
 
-        let stock_data = JSON.parse(body);
+        let stockData = JSON.parse(body);
 
-        let stock_object = stock_data.data;
+        let stockObject = stockData.data;
 
-        let stock_price = stock_object[0].price;
+        //Stock data attributes
+        let stockName = stockObject[0].name;
+        let stockPrice = stockObject[0].price;
+        let stockCurrency = stockObject[0].currency;
+        let stockPriceOpen = stockObject[0].price_open;
+        let stockDayChange = stockObject[0].day_change;
+        let stockDayChangePercent = stockObject[0].change_pct;
+        let stockCloseYesterday = stockObject[0].close_yesterday;
 
-        let stock_currency = stock_object[0].currency;
 
         //Render stock data on the page
         res.render("stock", {
           stockPageTitle: stock.symbol,
-          stockPagePrice: stock_price,
-          stockPageCurrency: stock_currency
+          stockPageName: stockName,
+          stockPagePrice: stockPrice,
+          stockPageCurrency: stockCurrency,
+          stockPagePriceOpen: stockPriceOpen,
+          stockPageCloseYesterday: stockCloseYesterday,
+          stockPageDayChange: stockDayChange,
+          stockPageDayChangePercent: stockDayChangePercent
         });
       });
     }
