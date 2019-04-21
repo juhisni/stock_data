@@ -14,10 +14,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+//User added stocks array empty at the beginning
 let stocks = [];
 
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
-var apikey = fs.readFileSync("token.txt", "utf8");
+const apikey = fs.readFileSync("token.txt", "utf8");
 
 //Homepage and a example GET request for Apple stock with rendered data price data.
 app.get("/", function(req, res){
@@ -44,22 +45,22 @@ app.get("/stocks/:stockName", function(req, res){
   stocks.forEach(function(stock){
     let userStock = _.lowerCase(stock.symbol);
     if (userStock === requestedStockName){
-      var baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=" + stock.symbol +"&api_token=" + apikey;
+      let baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=" + stock.symbol +"&api_token=" + apikey;
 
-      var options = {
+      let options = {
         url: baseURL,
         method: "GET"
       };
 
       request(options, function(error, response, body){
 
-        var stock_data = JSON.parse(body);
+        let stock_data = JSON.parse(body);
 
-        var stock_object = stock_data.data;
+        let stock_object = stock_data.data;
 
-        var stock_price = stock_object[0].price;
+        let stock_price = stock_object[0].price;
 
-        var stock_currency = stock_object[0].currency;
+        let stock_currency = stock_object[0].currency;
 
         //Render stock data on the page
         res.render("stock", {
