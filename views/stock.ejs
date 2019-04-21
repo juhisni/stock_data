@@ -20,9 +20,9 @@
     </tr>
     <tr>
       <th scope="row">Day change</th>
-      <td><%= stockPageDayChangePercent + "% (" + stockPageDayChange + ")" %></td>
+      <!-- Adds custom coloring (green/red) according to the day change value -->
+      <td class="<%= stockPageDayChange > 0 ? 'green' : 'red' %>"><%= stockPageDayChangePercent + "% (" + stockPageDayChange + ")" %></td>
     </tr>
   </tbody>
 </table>
-
 <%- include("partials/footer") %>
