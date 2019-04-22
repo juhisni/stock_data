@@ -37,6 +37,7 @@ app.get("/", function(req, res){
 //Adding new stocks to follow
 app.post("/add", function(req, res){
   const stock = {
+    name: req.body.stockName,
     symbol: req.body.tickerSymbol
   };
   stocks.push(stock);
