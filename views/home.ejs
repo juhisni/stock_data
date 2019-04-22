@@ -69,7 +69,10 @@
       <%= stock.name + " (" + stock.symbol + ")" %>
     </h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="/stocks/<%= stock.symbol %>" class="btn btn-primary">Stock information</a>
+    <a href="/stocks/<%= stock.symbol %>" class="btn btn-primary information-btn">Stock information</a>
+    <form action="/delete/<%= stock.symbol %>" method="post">
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
   </div>
 </div>
 <% }) %>

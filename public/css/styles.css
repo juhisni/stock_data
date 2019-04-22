@@ -13,3 +13,7 @@
 .stock-search-table {
   display: none;
 }
+.information-btn{
+  float: left;
+  margin-right: 1%;
+}

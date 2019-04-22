@@ -47,6 +47,20 @@ app.post("/add", function(req, res) {
   res.redirect("/");
 });
 
+//Deleting a followed stock
+app.post("/delete/:stockSymbol", function(req, res){
+  let deletedStock = req.params.stockSymbol;
+  //Loops through the stocks array to find the object that has symbol of deleted stock
+  // and then splices that object from the stocks array.
+  for (var i = 0; i < stocks.length; i++){
+    if (stocks[i].symbol === deletedStock){
+      stocks.splice(i, 1);
+      break;
+    }
+  }
+  res.redirect("/");
+});
+
 //Searching for stocks to add
 app.post("/search", function(req, res) {
 
