@@ -1,22 +1,7 @@
 <%- include("partials/header") %>
 <h1>Stock Data</h1>
 
-<!-- To search for available ticker symbols, go to https://www.worldtradingdata.com/search
-Add a ticker for stock, for example NDA-FI.HE for Nordea in OMXH stock exchange -->
-<!--<form action="/add" method="post">
-  <div class="row no-gutters">
-    <div class="col-auto">
-      <i class="fas fa-search h4 text-body"></i>
-    </div>
-    <div class="col">
-      <input class="form-control form-control-lg form-control-borderless" type="search" name="tickerSymbol" placeholder="Search for a stock">
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-lg btn-primary" type="submit">Search</button>
-    </div>
-  </div>
-</form> -->
-<!-- Search function -->
+<!-- Search bar function -->
 <form action="/search" method="post">
   <div class="row no-gutters">
     <div class="col-auto">
@@ -31,19 +16,20 @@ Add a ticker for stock, for example NDA-FI.HE for Nordea in OMXH stock exchange 
   </div>
 </form>
 
-  <table class="<%= searchTotalResults >= 0 ? 'table table-hover' : 'table table-hover stock-search-table' %>">
-    <thead>
-      <tr>
-        <th scope="col">Symbol</th>
-        <th scope="col">Name</th>
-        <th scope="col">Stock Exchange</th>
-        <th scope="col">Price</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
+<!-- Table for displaying search results -->
+<table class="<%= searchTotalResults >= 0 ? 'table table-hover' : 'table table-hover stock-search-table' %>">
+  <thead>
+    <tr>
+      <th scope="col">Symbol</th>
+      <th scope="col">Name</th>
+      <th scope="col">Stock Exchange</th>
+      <th scope="col">Price</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
     <% searchDataObject.forEach(function(searchResult){ %>
-      <form action="/add" method="post">
+    <form action="/add" method="post">
       <tr>
         <th scope="row">
           <%= searchResult.symbol %>
@@ -53,23 +39,29 @@ Add a ticker for stock, for example NDA-FI.HE for Nordea in OMXH stock exchange 
           <%= searchResult.name %>
           <input type="hidden" name="stockName" value="<%= searchResult.name %>" />
         </td>
-        <td><%= searchResult.stock_exchange_short %></td>
-        <td><%= searchResult.price %></td>
+        <td>
+          <%= searchResult.stock_exchange_short %>
+        </td>
+        <td>
+          <%= searchResult.price %>
+        </td>
         <td><button class="btn btn-primary" type="submit">Add</button></td>
       </tr>
-      </form>
+    </form>
     <% }) %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td>
-          Total results: <%= searchTotalResults %>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        Total results:
+        <%= searchTotalResults %>
+      </td>
+    </tr>
+  </tfoot>
+</table>
 
 
+<!-- User added stocks displayed as cards -->
 <% stocks.forEach(function(stock){ %>
 <div class="card" style="width: 400px;">
   <div class="card-body">

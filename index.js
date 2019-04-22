@@ -11,7 +11,9 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static("public"));
 
 //User added stocks array empty at the beginning
@@ -24,18 +26,19 @@ let searchTotalResults;
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
 const apikey = fs.readFileSync("token.txt", "utf8");
 
-//Homepage and a example GET request for Apple stock with rendered data price data.
-app.get("/", function(req, res){
+//Homepage
+app.get("/", function(req, res) {
 
-    res.render("home", {
-      stocks: stocks,
-      searchDataObject: searchDataObject,
-      searchTotalResults: searchTotalResults
-    });
+  //Rendered objects are empty by default
+  res.render("home", {
+    stocks: stocks,
+    searchDataObject: searchDataObject,
+    searchTotalResults: searchTotalResults
+  });
 });
 
 //Adding new stocks to follow
-app.post("/add", function(req, res){
+app.post("/add", function(req, res) {
   const stock = {
     name: req.body.stockName,
     symbol: req.body.tickerSymbol
@@ -44,7 +47,8 @@ app.post("/add", function(req, res){
   res.redirect("/");
 });
 
-app.post("/search", function(req, res){
+//Searching for stocks to add
+app.post("/search", function(req, res) {
 
   let searchedStock = req.body.searchValue;
   let baseURL = "https://www.worldtradingdata.com/api/v1/stock_search?search_term=" + searchedStock + "&search_by=symbol,name&limit=5&page=1&api_token=" + apikey;
@@ -54,7 +58,7 @@ app.post("/search", function(req, res){
     method: "GET"
   };
 
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     let searchData = JSON.parse(body);
 
     searchTotalResults = searchData.total_results;
@@ -65,21 +69,21 @@ app.post("/search", function(req, res){
 });
 
 //Navigating and rendering a certain stock's information to an individual page
-app.get("/stocks/:stockName", function(req, res){
+app.get("/stocks/:stockName", function(req, res) {
   let requestedStockName = _.lowerCase(req.params.stockName);
 
   //Checks if the stock is included in the stocks array and requests stock data if so
-  stocks.forEach(function(stock){
+  stocks.forEach(function(stock) {
     let userStock = _.lowerCase(stock.symbol);
-    if (userStock === requestedStockName){
-      let baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=" + stock.symbol +"&api_token=" + apikey;
+    if (userStock === requestedStockName) {
+      let baseURL = "https://www.worldtradingdata.com/api/v1/stock?symbol=" + stock.symbol + "&api_token=" + apikey;
 
       let options = {
         url: baseURL,
         method: "GET"
       };
 
-      request(options, function(error, response, body){
+      request(options, function(error, response, body) {
 
         let stockData = JSON.parse(body);
 
@@ -111,6 +115,6 @@ app.get("/stocks/:stockName", function(req, res){
   });
 });
 
-app.listen(3000, function(){
+app.listen(3000, function() {
   console.log("Server running on port 3000");
 });

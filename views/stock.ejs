@@ -1,27 +1,39 @@
 <%- include("partials/header") %>
-<h1><%= stockPageName + " (" + stockPageTitle + ")" %></h1>
+<h1>
+  <%= stockPageName + " (" + stockPageTitle + ")" %>
+</h1>
 <table class="table stock-table">
   <tbody>
     <tr>
       <th scope="row">Price</th>
-      <td><%= stockPagePrice %></td>
+      <td>
+        <%= stockPagePrice %>
+      </td>
     </tr>
     <tr>
       <th scope="row">Currency</th>
-      <td><%= stockPageCurrency %></td>
+      <td>
+        <%= stockPageCurrency %>
+      </td>
     </tr>
     <tr>
       <th scope="row">Open price</th>
-      <td><%= stockPagePriceOpen %></td>
+      <td>
+        <%= stockPagePriceOpen %>
+      </td>
     </tr>
     <tr>
       <th scope="row">Close yesterday</th>
-      <td><%= stockPageCloseYesterday %></td>
+      <td>
+        <%= stockPageCloseYesterday %>
+      </td>
     </tr>
     <tr>
       <th scope="row">Day change</th>
       <!-- Adds custom coloring (green/red) according to the day change value -->
-      <td class="<%= stockPageDayChange > 0 ? 'green' : 'red' %>"><%= stockPageDayChangePercent + "% (" + stockPageDayChange + ")" %></td>
+      <td class="<%= stockPageDayChange > 0 ? 'green' : 'red' %>">
+        <%= stockPageDayChangePercent + "% (" + stockPageDayChange + ")" %>
+      </td>
     </tr>
   </tbody>
 </table>

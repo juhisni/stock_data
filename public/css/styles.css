@@ -1,12 +1,15 @@
-.stock-table{
-  width:50%;
+.stock-table {
+  width: 50%;
 }
-.green{
+
+.green {
   color: green;
 }
-.red{
+
+.red {
   color: red;
 }
-.stock-search-table{
-  display:none;
+
+.stock-search-table {
+  display: none;
 }
