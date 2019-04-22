@@ -1,22 +1,31 @@
 <%- include("partials/header") %>
 <h1>Stock Data</h1>
 <h2>Add a new stock</h2>
+
+<!-- To search for available ticker symbols, go to https://www.worldtradingdata.com/search
+Add a ticker for stock, for example NDA-FI.HE for Nordea in OMXH stock exchange -->
 <form action="/add" method="post">
-  <div class="form-group">
-    <!-- To search for available ticker symbols, go to https://www.worldtradingdata.com/search
-    Add a ticker for stock, for example NDA-FI.HE for Nordea in OMXH stock exchange -->
-    <label>Ticker symbol for stock</label>
-    <input class="form-control" type="text" name="tickerSymbol">
-  </div>
-  <button class="btn btn-primary" type="submit">Add</button>
-</form>
-<% stocks.forEach(function(stock){ %>
-  <div class="card" style="width: 400px;">
-    <div class="card-body">
-      <h5 class="card-title"><%= stock.symbol %></h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="/stocks/<%= stock.symbol %>" class="btn btn-primary">Stock information</a>
+  <div class="row no-gutters">
+    <div class="col-auto">
+      <i class="fas fa-search h4 text-body"></i>
+    </div>
+    <div class="col">
+      <input class="form-control form-control-lg form-control-borderless" type="search" name="tickerSymbol" placeholder="Search for a stock">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-lg btn-primary" type="submit">Search</button>
     </div>
   </div>
+</form>
+<% stocks.forEach(function(stock){ %>
+<div class="card" style="width: 400px;">
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= stock.symbol %>
+    </h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="/stocks/<%= stock.symbol %>" class="btn btn-primary">Stock information</a>
+  </div>
+</div>
 <% }) %>
 <%- include("partials/footer") %>
