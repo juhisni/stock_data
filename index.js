@@ -17,6 +17,10 @@ app.use(express.static("public"));
 //User added stocks array empty at the beginning
 let stocks = [];
 
+//Search result object and number of results at the beginning
+let searchDataObject = [];
+let searchTotalResults;
+
 //Create a token.txt file and store your www.worldtradingdata.com API key in it
 const apikey = fs.readFileSync("token.txt", "utf8");
 
@@ -24,7 +28,9 @@ const apikey = fs.readFileSync("token.txt", "utf8");
 app.get("/", function(req, res){
 
     res.render("home", {
-      stocks: stocks
+      stocks: stocks,
+      searchDataObject: searchDataObject,
+      searchTotalResults: searchTotalResults
     });
 });
 
@@ -35,6 +41,26 @@ app.post("/add", function(req, res){
   };
   stocks.push(stock);
   res.redirect("/");
+});
+
+app.post("/search", function(req, res){
+
+  let searchedStock = req.body.searchValue;
+  let baseURL = "https://www.worldtradingdata.com/api/v1/stock_search?search_term=" + searchedStock + "&search_by=symbol,name&limit=5&page=1&api_token=" + apikey;
+
+  let options = {
+    url: baseURL,
+    method: "GET"
+  };
+
+  request(options, function(error, response, body){
+    let searchData = JSON.parse(body);
+
+    searchTotalResults = searchData.total_results;
+
+    searchDataObject = searchData.data;
+    res.redirect("/");
+  });
 });
 
 //Navigating and rendering a certain stock's information to an individual page
